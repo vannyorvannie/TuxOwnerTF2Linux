@@ -178,12 +178,6 @@ void CAim::Run(CBaseEntity* pLocal, CUserCmd* pCommand)
 	ClampAngle(vAngs);
 	gCheatMenu.iAimbotIndex = pEntity->GetIndex();
 	//auto pWep = pLocal->GetActiveWeapon();
-
-	if (gCheatMenu.warp_enable && !epic[SDL_SCANCODE_R])
-	{
-		return;
-	}
-
 	pCommand->viewangles = vAngs; // always set this cuz otherwise the viewangles will desync.
 
 	if (!gCheatMenu.aimbot_silent) {

@@ -12,18 +12,60 @@ struct CMenuItems_t
 	float flStep;
 	bool isClassSwitch;
 };
+/*
+if (gCheatMenu.bMenuActive)
+	{
+		
+		if (keystate[SDL_SCANCODE_UP] && flCurTime > flNextSend) // Up
+		{
+			flNextSend = (flCurTime + thesleeptime);
+			if (gCheatMenu.iMenuIndex > 0) gCheatMenu.iMenuIndex--;
+			else gCheatMenu.iMenuIndex = gCheatMenu.iMenuItems - 1;
+			//return 0;
+		}
+		if (keystate[SDL_SCANCODE_DOWN] && flCurTime > flNextSend) // Down
+		{
+			flNextSend = (flCurTime + thesleeptime);
+			if (gCheatMenu.iMenuIndex < gCheatMenu.iMenuItems - 1) gCheatMenu.iMenuIndex++;
+			else gCheatMenu.iMenuIndex = 0;
+			//return 0;
+		}
+		if (keystate[SDL_SCANCODE_LEFT] && flCurTime > flNextSend) // Left
+		{
+			if (gCheatMenu.pMenu[gCheatMenu.iMenuIndex].value && flCurTime > flNextSend)
+			{
+				flNextSend = (flCurTime + thesleeptime);
+				gCheatMenu.pMenu[gCheatMenu.iMenuIndex].value[0] -= gCheatMenu.pMenu[gCheatMenu.iMenuIndex].flStep;
+				if (gCheatMenu.pMenu[gCheatMenu.iMenuIndex].value[0] < gCheatMenu.pMenu[gCheatMenu.iMenuIndex].flMin)
+					gCheatMenu.pMenu[gCheatMenu.iMenuIndex].value[0] = gCheatMenu.pMenu[gCheatMenu.iMenuIndex].flMax;
+			}
+		}
+		if (keystate[SDL_SCANCODE_RIGHT] && flCurTime > flNextSend) // Right
+		{
+			if (gCheatMenu.pMenu[gCheatMenu.iMenuIndex].value && flCurTime > flNextSend)
+			{
+				flNextSend = (flCurTime + thesleeptime);
+				gCheatMenu.pMenu[gCheatMenu.iMenuIndex].value[0] += gCheatMenu.pMenu[gCheatMenu.iMenuIndex].flStep;
+				if (gCheatMenu.pMenu[gCheatMenu.iMenuIndex].value[0] > gCheatMenu.pMenu[gCheatMenu.iMenuIndex].flMax)
+					gCheatMenu.pMenu[gCheatMenu.iMenuIndex].value[0] = gCheatMenu.pMenu[gCheatMenu.iMenuIndex].flMin;
+			}
+		}
 
+	}
+
+*/
 class CCheatMenu
 {
 public:
 	void Render(void);
 	void DrawMenu(void);
 	int	 AddItem(int nIndex, char szTitle[30], float* value, float flMin, float flMax, float flStep, bool isClassHead);
-    void HandleControls();
+    void HandleControls(SDL_Event* event);
 	void DrawInfo(int speedValue, float ticks);
 	//private:
 	bool bMenuActive;
 	int iMenuIndex;
+	int cur_x, cur_y;
 
 	int iMenuItems;
 	CMenuItems_t pMenu[120];

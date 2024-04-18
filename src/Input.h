@@ -6,6 +6,8 @@
 
 #include "SDK.h" // why not
 
+
+
 class CInput
 {
 public:

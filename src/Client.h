@@ -5,7 +5,7 @@
 class CGlobalzz {
 public:
 	//CBaseEntity* local{};
-	//CUserCmd* cmd{};
+	CUserCmd* cmd{};
 	//CUserCmd original_cmd{};
 	bool isfiring, silenttime;
 	bool* sendpacket;

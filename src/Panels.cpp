@@ -46,8 +46,15 @@ void Hooked_PaintTraverse( void *pPanels, unsigned int vguiPanel, bool forceRepa
 		{
 			//This section will be called when the player is not at the menu game and can see the screen or not taking a screenshot.
 			//gDrawManager.DrawString( 200, 200, gDrawManager.dwGetTeamColor(3), "Welcome to Darkstorm"); //Remove this if you want.
-
-			gCheatMenu.HandleControls(); // call the Handle Controls function to handle controls of the menu.. Duh!
+			float flCurTime = gInts.Engine->Time();
+			static float flNextSend = 0.0f;
+			static float thesleeptime = 0.1f;
+			const Uint8 *keystate = SDL_GetKeyboardState(NULL);
+			if (keystate[SDL_SCANCODE_INSERT] && flCurTime > flNextSend) //insert
+			{
+				flNextSend = (flCurTime + thesleeptime);
+				gCheatMenu.bMenuActive = !gCheatMenu.bMenuActive;
+    		}
 			if (gCheatMenu.bMenuActive)
 			{
 				gCheatMenu.DrawMenu();

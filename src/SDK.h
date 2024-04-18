@@ -20,8 +20,29 @@
 #include "SDK/studiohdr.h"
 #include "SDK/Enums.h"
 #include <functional>
+#include <SDL2/SDL.h>
+#include <link.h>
+#include "sdl.h"
+
+#define SWAPWINDOW_OFFSET 0xFD648
+#define POLLEVENT_OFFSET  0xFCF64
+
+
+#define SDL_SO            "./bin/libSDL2-2.0.so.0"
+
+#define ORIGINAL(name, ...) ho_##name(__VA_ARGS__);
+
+#define GET_OFFSET(HANDLE, OFFSET) \ 
+    ((void*)(((struct link_map*)HANDLE)->l_addr) + OFFSET)
+
+#define HOOK_SDL(name)       \
+    ho_##name  = *name##Ptr; \
+    *name##Ptr = h_##name;
 
 using namespace std;
+
+
+
 
 typedef void *(*CreateInterface_t)(const char *, int *);
 typedef void *(*CreateInterfaceFn)(const char *pName, int *pReturnCode);
@@ -1084,6 +1105,8 @@ private:
 	inline void AddTextOverlay(const Vector& origin, int line_offset, float duration, int r, int g, int b, int a, PRINTF_FORMAT_STRING const char* format, ...) {} /* catch improper use of bad interface. Needed because '0' duration can be resolved by compiler to NULL format string (i.e., compiles but calls wrong function) */
 };
 
+typedef int (*PollEvent_t)(SDL_Event* event);
+extern PollEvent_t* PollEventPtr;
 class CInterfaces
 {
 public:
@@ -1101,3 +1124,4 @@ public:
 extern CInterfaces gInts;
 extern CPlayerVariables gPlayerVars;
 extern COffsets gOffsets;
+extern PollEvent_t ho_PollEvent;

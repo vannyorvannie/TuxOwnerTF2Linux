@@ -10,6 +10,8 @@
 #include "argh.h" // killsay and soon to be annoncer
 #include <SDL2/SDL.h>
 #include "Client.h"
+#include <link.h>
+#include "sdl.h"
 
 COffsets gOffsets;
 CPlayerVariables gPlayerVars;
@@ -21,6 +23,11 @@ CreateInterface_t ClientFactory = NULL;
 CreateInterface_t VGUIFactory = NULL;
 CreateInterface_t VGUI2Factory = NULL;
 CreateInterface_t CvarFactory = NULL;
+// wtf pasted!!1
+PollEvent_t ho_PollEvent   = NULL;
+PollEvent_t* PollEventPtr;
+
+
 void mainThread()
 {	
 	if (gInts.Client == NULL) //Prevent repeat callings.
@@ -36,6 +43,10 @@ void mainThread()
 		ClientFactory = ( CreateInterfaceFn ) GetProcAddress( gSignatures.GetModuleHandleSafe( "./tf/bin/client.so" ), "CreateInterface" );
 		EngineFactory = ( CreateInterfaceFn ) GetProcAddress( gSignatures.GetModuleHandleSafe( "./bin/engine.so" ), "CreateInterface" );
 		
+		void* h_sdl2 = dlopen("./bin/libSDL2-2.0.so.0", RTLD_LAZY | RTLD_NOLOAD);
+		
+		PollEventPtr = (PollEvent_t*)GET_OFFSET(h_sdl2, 0xFCF64);
+
 		gInts.Client = ( CHLClient* )ClientFactory( "VClient017", NULL);
 		gInts.EntList = ( CEntList* ) ClientFactory( "VClientEntityList003", NULL );
 		gInts.Engine = ( EngineClient* ) EngineFactory( "VEngineClient013", NULL );
@@ -44,6 +55,7 @@ void mainThread()
 		gInts.ModelInfo = ( IVModelInfo* ) EngineFactory( "VModelInfoClient006", NULL );
 		gInts.EventManager = (IGameEventManager2*)EngineFactory("GAMEEVENTSMANAGER002", NULL);
 		gInts.DebugOverlay = (CDebugOverlay* )EngineFactory("VDebugOverlay003", NULL);
+		HOOK_SDL(PollEvent);
 		XASSERT(gInts.Surface);
 		XASSERT(gInts.Client);
 		XASSERT(gInts.Engine);

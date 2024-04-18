@@ -43,12 +43,10 @@ bool Hooked_CreateMove(void *ClientMode, float input_sample_frametime, CUserCmd 
     // TODO: wrap this
 		if (pLocal == NULL)
 			return bReturn;
+		
+		g.cmd = pCommand;
 
 		CBaseEntity *oEntity = gInts.EntList->GetClientEntity(gInts.Engine->GetLocalPlayer());		
-
-
-		
-
 		gTrigger.Run(pLocal, pCommand);
 		gAim.Run(pLocal, pCommand);
 		gMisc.Run(pLocal, pCommand);
