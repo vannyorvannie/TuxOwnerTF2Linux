@@ -1,3 +1,7 @@
+# IMPORTANT INFO!
+- This cheat is no longer working due to the x64 update.
+- This cheat is no longer being worked on.
+
 # TuxOwner A Darkstorm Linux Paste
 A linux cheat made by Vannie/Reality (me). Most of the stuff is pasted from darkstorm based stuff (Dumpster-Fire, Potassium, ETC). This source is a mess btw.
 
